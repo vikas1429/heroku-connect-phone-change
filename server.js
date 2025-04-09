@@ -17,6 +17,7 @@ app.post('/update', function(req, res) {
             ssl               : false
         }
     );
+    console.log('db connect');
     db.connect();
 }
     //pg.connect(process.env.DATABASE_URL, function (err, conn, done) {
