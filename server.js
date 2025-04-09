@@ -3,10 +3,14 @@ var bodyParser = require('body-parser');
 var pg = require('pg');
 
 var app = express();
+const url = require('url');
+const proxy = require('express-http-proxy');
+
+
 
 app.set('port', process.env.PORT || 5000);
 
-app.use(express.static('public'));
+app.use(express.static('public'),proxy);
 app.use(bodyParser.json());
 
 app.post('/update', function(req, res) {
