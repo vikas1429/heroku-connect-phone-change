@@ -14,7 +14,7 @@ app.post('/update', function(req, res) {
     var db =  new pg.Client(
         {
             connectionString  : process.env.DATABASE_URL,
-            ssl               : true
+            ssl               : false
         }
     );
     db.connect();
