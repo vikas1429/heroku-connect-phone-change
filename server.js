@@ -10,11 +10,20 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 app.post('/update', function(req, res) {
-    pg.connect(process.env.DATABASE_URL, function (err, conn, done) {
+    if(process.env.DATABASE_URL){
+    var db =  new pg.Client(
+        {
+            connectionString  : process.env.DATABASE_URL,
+            ssl               : true
+        }
+    );
+    db.connect();
+}
+    //pg.connect(process.env.DATABASE_URL, function (err, conn, done) {
         // watch for any connect issues
-        if (err) console.log(err);
+    /*    if (err) console.log(err);
        console.log('process.env.DATABASE_URL');
-        conn.query(
+        db.query(
             'UPDATE salesforce.Contact SET Phone = $1, MobilePhone = $1 WHERE LOWER(FirstName) = LOWER($2) AND LOWER(LastName) = LOWER($3) AND LOWER(Email) = LOWER($4)',
             [req.body.phone.trim(), req.body.firstName.trim(), req.body.lastName.trim(), req.body.email.trim()],
             function(err, result) {
@@ -39,7 +48,7 @@ app.post('/update', function(req, res) {
                 }
             }
         );
-    });
+    });*/
 });
 
 app.listen(app.get('port'), function () {
